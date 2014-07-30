@@ -1,0 +1,23 @@
+{
+  "name": "json-form",
+  "version": "0.0.0",
+  "description": "Generate forms from JSON schema",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lisa Övermyr <lisaovermyr@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "swig": "^1.4.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ellell/json-form.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ellell/json-form/issues"
+  },
+  "homepage": "https://github.com/ellell/json-form"
+}
