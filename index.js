@@ -1,32 +1,37 @@
 var swig = require('swig')
 
   , defaultTypes = {
-      text: '<input type="text" name="{{name}}">{{value}}</input>'
-    , checkbox: '<input type="checkbox" name="{{name}}"{% if checked %} checked{% endif %}>'
+      text: swig.compileFile(__dirname + '/templates/form-partials/text.html')
+    , checkbox: swig.compileFile(__dirname + '/templates/form-partials/checkbox.html')
+    , select: swig.compileFile(__dirname + '/templates/form-partials/select.html')
   }
-  , JsonForm = function () {
+  , JsonForm = function (opts) {
     if (!(this instanceof JsonForm))
-      return new JsonForm()
+      return new JsonForm(opts)
 
     this.types = defaultTypes
   }
 
+swig.setDefaults({
+  autoescape: false
+})
+
 JsonForm.prototype.generate = function (json) {
   var self = this
-    , form = '<form>'
+    , inputElements = ''
 
   json.forEach(function (formItem) {
     if (!self.types[formItem.type])
       throw new Error('Type is not defined ' + formItem.type)
 
-    form = form + swig.render(self.types[formItem.type], { locals: formItem })
+    inputElements = inputElements + self.types[formItem.type](formItem)
   })
 
-  return form + '</form>'
+  return swig.renderFile(__dirname + '/templates/layout.html', { inputElements: inputElements })
 }
 
 JsonForm.prototype.addType = function (type) {
-  this.types[type.name] = type.html
+  this.types[type.name] = swig.compile(type.html)
 }
 
 module.exports = JsonForm
