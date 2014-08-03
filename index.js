@@ -1,9 +1,11 @@
 var swig = require('swig')
 
   , defaultTypes = {
-      text: swig.compileFile(__dirname + '/templates/form-partials/text.html')
-    , checkbox: swig.compileFile(__dirname + '/templates/form-partials/checkbox.html')
+      checkbox: swig.compileFile(__dirname + '/templates/form-partials/checkbox.html')
+    , hidden: swig.compileFile(__dirname + '/templates/form-partials/hidden.html')
     , select: swig.compileFile(__dirname + '/templates/form-partials/select.html')
+    , text: swig.compileFile(__dirname + '/templates/form-partials/text.html')
+    , textarea: swig.compileFile(__dirname + '/templates/form-partials/textarea.html')
   }
   , JsonForm = function (opts) {
     if (!(this instanceof JsonForm))
