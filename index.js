@@ -11,6 +11,9 @@ var swig = require('swig')
     if (!(this instanceof JsonForm))
       return new JsonForm(opts)
 
+    opts = opts || {}
+
+    this.baseLocals = opts.baseLocals
     this.types = defaultTypes
   }
 
@@ -21,6 +24,9 @@ swig.setDefaults({
 JsonForm.prototype.generate = function (json) {
   var self = this
     , inputElements = ''
+    , locals = {
+        base: self.baseLocals
+    }
 
   json.forEach(function (formItem) {
     if (!self.types[formItem.type])
@@ -29,7 +35,8 @@ JsonForm.prototype.generate = function (json) {
     inputElements = inputElements + self.types[formItem.type](formItem)
   })
 
-  return swig.renderFile(__dirname + '/templates/layout.html', { inputElements: inputElements })
+  locals.inputElements = inputElements
+  return swig.renderFile(__dirname + '/templates/layout.html', locals)
 }
 
 JsonForm.prototype.addType = function (type) {
